@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es2018",
+        "lib": ["es2018"],
+        "outDir": "dist",
+        "rootDir": "./src",
+        "declaration": true,
+        "noImplicitAny": true,
+        "sourceMap": true,
+        "allowJs": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "removeComments": false,
+        "incremental": true,
+        "skipLibCheck": true,
+    },
+    "include": ["src/**/*"],
+    "exclude": ["dist", "node_modules", "sample", "test/**"]
+}
