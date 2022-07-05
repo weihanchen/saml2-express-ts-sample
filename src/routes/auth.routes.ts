@@ -29,7 +29,7 @@ router
         passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
         (_: Request, response: Response) => {
             console.log('success');
-            response.redirect('/');
+            response.redirect('/auth/sso/info');
         }
     );
 

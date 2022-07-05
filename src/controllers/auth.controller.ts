@@ -10,9 +10,9 @@ export class AuthController {
                 message: 'NOT authenticated',
             });
         }
+        console.log(request.user);
         response.status(200).json({
-            username: request.user.username,
-            email: request.user.email,
+            nameID: request.user.nameID,
         });
     }
 }
