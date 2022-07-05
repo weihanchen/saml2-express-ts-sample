@@ -4,7 +4,8 @@ import { port } from './config';
 import * as logger from 'morgan';
 import * as passport from 'passport';
 import * as session from 'express-session';
-import AuthRouter from './routes/auth.routes';
+import authRouter from './routes/auth.routes';
+import * as  strategies from './strategies/strategies';
 
 (async () => {
     const app = express();
@@ -30,9 +31,10 @@ import AuthRouter from './routes/auth.routes';
             secret: "This is not a secret, friend."
         })
     );
+    strategies.init();
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use('/auth', AuthRouter);
+    app.use('/auth', authRouter);
     app.listen(port, () => {
         console.info(`App is running at http://localhost:${port}`);
         console.info('Press CTRL-C to stop\n');

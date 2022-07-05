@@ -1,5 +1,4 @@
-
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response } from 'express';
 import { AuthController } from '../controllers/auth.controller';
 import * as passport from 'passport';
 
@@ -10,11 +9,12 @@ const router: Router = Router();
  * If Session is active it returns saml response
  * If Session is not active it redirects to IDP's login form
  */
-router.get('/sso',
+router.route('/sso').get(
     passport.authenticate('saml', {
         successRedirect: '/',
         failureRedirect: '/login',
-    }));
+    })
+);
 
 /**
  * This is the callback URL
@@ -23,10 +23,16 @@ router.get('/sso',
  * If every thing validated we validates if user email present into user DB.
  * Then creates a session for the user set in cookies and do a redirect to Application
  */
-router.route('/sso/callback').post(
-    passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
-    (_: Request, response: Response) => {
-        console.log('success');
-    });
+router
+    .route('/sso/callback')
+    .post(
+        passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
+        (_: Request, response: Response) => {
+            console.log('success');
+            response.redirect('/');
+        }
+    );
+
+router.route('/sso/info').get(AuthController.info);
 
 export default router;

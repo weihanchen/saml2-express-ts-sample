@@ -1,26 +1,17 @@
-import * as passport from 'passport';
+
+import * as fs from 'fs';
 import * as passportSaml from 'passport-saml';
-import { ssoEntryPoint, ssoIssuer, ssoCallbackUrl, ssoCert } from '../config';
+import { ssoEntryPoint, ssoIssuer, ssoCallbackUrl, samlCertPath } from '../config';
 
-passport.serializeUser((user, done) => {
-    done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
+const cert: string = fs.readFileSync(samlCertPath).toString();
 
 // SAML strategy for passport -- Single IPD
-const strategy = new passportSaml.Strategy(
+export const samlStrategy = new passportSaml.Strategy(
     {
         entryPoint: ssoEntryPoint,
         issuer: ssoIssuer,
         callbackUrl: ssoCallbackUrl,
-        cert: ssoCert,
+        cert,
     },
     (profile: any, done: any) => done(null, profile),
 );
-
-passport.use(strategy);
-
-module.exports = passport;

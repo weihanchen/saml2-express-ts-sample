@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { join } from 'path';
 
 dotenv.config({ path: '.env' });
 
@@ -10,4 +11,6 @@ export const ssoIssuer: string = process.env.SSO_ISSUER;
 
 export const ssoCallbackUrl: string = process.env.SSO_CALLBACK_URL;
 
-export const ssoCert: string = process.env.SSO_CERT;
+const configDirPath = 'initial';
+
+export const samlCertPath = join(configDirPath, 'saml.cert');
