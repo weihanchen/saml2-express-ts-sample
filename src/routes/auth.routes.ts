@@ -9,7 +9,7 @@ const router: Router = Router();
  * If Session is active it returns saml response
  * If Session is not active it redirects to IDP's login form
  */
-router.route('/sso').get(
+router.route('/saml2').get(
     passport.authenticate('saml', {
         successRedirect: '/',
         failureRedirect: '/login',
@@ -17,22 +17,18 @@ router.route('/sso').get(
 );
 
 /**
- * This is the callback URL
- * Once Identity Provider validated the Credentials it will be called with base64 SAML req body
- * Here we used Saml2js to extract user Information from SAML assertion attributes
- * If every thing validated we validates if user email present into user DB.
- * Then creates a session for the user set in cookies and do a redirect to Application
+ * Assertion Consumer Service endpoint (POST)
  */
 router
-    .route('/sso/callback')
+    .route('/saml2/acs')
     .post(
         passport.authenticate('saml', { failureRedirect: '/', failureFlash: true }),
         (_: Request, response: Response) => {
             console.log('success');
-            response.redirect('/auth/sso/info');
+            response.redirect('/auth/saml2/info');
         }
     );
 
-router.route('/sso/info').get(AuthController.info);
+router.route('/saml2/info').get(AuthController.info);
 
 export default router;
