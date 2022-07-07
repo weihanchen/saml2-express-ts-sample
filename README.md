@@ -12,10 +12,6 @@ cd initial
 openssl req -newkey rsa:4096 -x509 -nodes -sha256 -keyout sp.pem -out sp.crt
 ```
 
-### upload to okta
-
-![Upload CRT](./images/upload_crt.png)
-
 ## Identity Provider Configuration
 - GET `/auth/saml2/metadata`: Metadata endpoint 
 - POST `/auth/saml2/acs`: Assertion Consumer Service endpoint 
@@ -26,3 +22,6 @@ openssl req -newkey rsa:4096 -x509 -nodes -sha256 -keyout sp.pem -out sp.crt
 
 [🔍 Here](./.env)
 
+## Tested to work with
+- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
+- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-configuration/configure-auth0-as-service-and-identity-provider#10-troubleshooting)
