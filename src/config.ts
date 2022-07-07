@@ -11,6 +11,8 @@ export const saml2IDPEntityID: string = process.env.SAML2_IDP_ENTITY_ID;
 
 const configDirPath = 'initial';
 
-export const samlCertPath = join(configDirPath, 'saml.cert');
+export const idpCertPath = join(configDirPath, 'idp.cert');
 
-export const privateKeyPath = join(configDirPath, 'sp.pem');
+export const spPemPath = join(configDirPath, 'sp.pem');
+
+export const spCertPath = join(configDirPath, 'sp.crt');

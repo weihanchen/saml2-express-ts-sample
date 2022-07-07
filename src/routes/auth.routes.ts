@@ -1,6 +1,9 @@
 import { Router, Request, Response } from 'express';
 import { AuthController } from '../controllers/auth.controller';
 import * as passport from 'passport';
+import * as fs from 'fs';
+import { samlStrategy } from '../strategies/saml.strategy';
+import { spCertPath } from '../config';
 
 const router: Router = Router();
 
@@ -28,6 +31,16 @@ router
             response.redirect('/auth/saml2/info');
         }
     );
+
+/**
+ *  Metadata endpoint
+ */   
+router.route('/saml2/metadata').get((req: Request, res: Response) => {
+    const cert: string = fs.readFileSync(spCertPath, 'utf-8');
+    console.info(cert);
+    res.type('application/xml');
+    res.send(samlStrategy.generateServiceProviderMetadata(cert));
+});
 
 router.route('/saml2/info').get(AuthController.info);
 
