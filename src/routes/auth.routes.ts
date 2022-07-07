@@ -42,6 +42,13 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
     res.send(samlStrategy.generateServiceProviderMetadata(cert));
 });
 
+/**
+ * Single Logout Service endpoint
+ */
+router.route('/saml2/sls').get((req: Request, res: Response) => {
+    console.debug('logout')
+});
+
 router.route('/saml2/info').get(AuthController.info);
 
 export default router;

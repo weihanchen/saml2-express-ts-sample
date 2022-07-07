@@ -6,8 +6,6 @@ const cert: string = fs.readFileSync(idpCertPath).toString();
 
 const privateKey: string = fs.readFileSync(spPemPath).toString();
 
-console.debug(privateKey);
-
 // SAML strategy for passport -- Single IPD
 export const samlStrategy = new passportSaml.Strategy(
     {
