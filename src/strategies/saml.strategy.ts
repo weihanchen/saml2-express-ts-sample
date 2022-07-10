@@ -10,6 +10,7 @@ const privateKey: string = fs.readFileSync(spPemPath).toString();
 export const samlStrategy = new passportSaml.Strategy(
     {
         entryPoint: saml2EntryPoint,
+        callbackUrl: 'http://localhost:5002/auth/saml2/acs',
         issuer: saml2IDPEntityID,
         cert,
         decryptionPvk: privateKey,

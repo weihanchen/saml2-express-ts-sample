@@ -12,6 +12,11 @@ cd initial
 openssl req -newkey rsa:4096 -x509 -nodes -sha256 -keyout sp.pem -out sp.crt
 ```
 
+## Redirect to IDP
+When the user directly accesses the service provider, sp should redirect to the idp login follow sso.
+
+- GET `auth/saml2`: Redirect to IDP
+
 ## Identity Provider Configuration
 - GET `/auth/saml2/metadata`: Metadata endpoint 
 - POST `/auth/saml2/acs`: Assertion Consumer Service endpoint 
@@ -24,4 +29,4 @@ openssl req -newkey rsa:4096 -x509 -nodes -sha256 -keyout sp.pem -out sp.crt
 
 ## Tested to work with
 - [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
-- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-configuration/configure-auth0-as-service-and-identity-provider#10-troubleshooting)
+- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-sso-integrations/configure-auth0-saml-identity-provider#manually-configure-sso-integrations)
