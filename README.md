@@ -1,16 +1,29 @@
 saml2-express-ts-sample
 ===
 
-This Project is an example for saml2 integration with OKTA.
+This Project is an example for saml2 integration with auth0、OKTA.
 
-## self-signed certificate
+## Quick Start
+
+### self-signed certificate
 If you need stronger security, please use credentials for mutual security verification
 
-### generate service provider's cert
+generate service provider's cert
+
 ```sh
 cd initial
 openssl req -newkey rsa:4096 -x509 -nodes -sha256 -keyout sp.pem -out sp.crt
 ```
+
+### Start with  Service Provider
+```sh
+npm run start:dev
+```
+
+### Configuration with IDP
+- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-sso-integrations/configure-auth0-saml-identity-provider#manually-configure-sso-integrations)
+- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
+
 
 ## Redirect to IDP
 When the user directly accesses the service provider, sp should redirect to the idp login follow sso.
@@ -26,7 +39,3 @@ When the user directly accesses the service provider, sp should redirect to the 
 ## Service Provider Configuration
 
 [🔍 Here](./.env)
-
-## Tested to work with
-- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-sso-integrations/configure-auth0-saml-identity-provider#manually-configure-sso-integrations)
-- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
