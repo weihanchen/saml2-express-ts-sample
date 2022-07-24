@@ -28,5 +28,5 @@ When the user directly accesses the service provider, sp should redirect to the 
 [🔍 Here](./.env)
 
 ## Tested to work with
-- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
 - [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-sso-integrations/configure-auth0-saml-identity-provider#manually-configure-sso-integrations)
+- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)

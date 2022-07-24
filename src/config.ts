@@ -5,7 +5,7 @@ dotenv.config({ path: '.env' });
 
 export const port: number = +process.env.PORT;
 
-export const saml2EntryPoint: string = process.env.SAML2_ENTRYPOINT;
+export const saml2IdpSso: string = process.env.SAML2_IDP_SSO;
 
 export const saml2IDPEntityID: string = process.env.SAML2_IDP_ENTITY_ID;
 

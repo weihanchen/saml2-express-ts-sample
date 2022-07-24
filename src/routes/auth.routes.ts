@@ -4,6 +4,7 @@ import * as passport from 'passport';
 import * as fs from 'fs';
 import { samlStrategy } from '../strategies/saml.strategy';
 import { spCertPath } from '../config';
+import { RequestWithUser } from 'passport-saml/lib/passport-saml/types';
 
 const router: Router = Router();
 
@@ -34,7 +35,7 @@ router
 
 /**
  *  Metadata endpoint
- */   
+ */
 router.route('/saml2/metadata').get((req: Request, res: Response) => {
     const cert: string = fs.readFileSync(spCertPath, 'utf-8');
     console.info(cert);
@@ -45,8 +46,14 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
 /**
  * Single Logout Service endpoint
  */
-router.route('/saml2/sls').get((req: Request, res: Response) => {
-    console.debug('logout')
+router.route('/saml2/sls').get((req: RequestWithUser, res: Response) => {
+    samlStrategy.logout(req, (err, url) => {
+        console.debug(err);
+        console.debug(url)
+        if (!err) {
+            res.redirect(url);
+        }
+    });
 });
 
 router.route('/saml2/info').get(AuthController.info);
