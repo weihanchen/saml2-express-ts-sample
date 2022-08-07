@@ -8,6 +8,11 @@ import { RequestWithUser } from 'passport-saml/lib/passport-saml/types';
 
 const router: Router = Router();
 
+router.route('/logout').post((req: Request, res: Response) => {
+    console.log(req.body);
+    res.send('ok')
+})
+
 /**
  * This Route Authenticates req with IDP
  * If Session is active it returns saml response
@@ -47,9 +52,12 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
  * Single Logout Service endpoint
  */
 router.route('/saml2/sls').get((req: RequestWithUser, res: Response) => {
+    
     samlStrategy.logout(req, (err, url) => {
-        console.debug(err);
-        console.debug(url)
+        req.logout(undefined, (err) => console.log(err))
+        console.log(req.user)
+        console.log(err);
+        console.log(url)
         if (!err) {
             res.redirect(url);
         }

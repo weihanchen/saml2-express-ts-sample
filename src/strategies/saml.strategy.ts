@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as passportSaml from 'passport-saml';
-import { saml2IdpSso, saml2IDPEntityID, idpCertPath, spPemPath } from '../config';
+import { saml2IdpSso, saml2IDPEntityID, idpCertPath, spPemPath, saml2IdpSlo } from '../config';
 
 const cert: string = fs.readFileSync(idpCertPath).toString();
 
@@ -11,6 +11,7 @@ export const samlStrategy = new passportSaml.Strategy(
     {
         entryPoint: saml2IdpSso,
         callbackUrl: 'http://localhost:5002/auth/saml2/acs',
+        logoutUrl: saml2IdpSlo,
         issuer: saml2IDPEntityID,
         cert,
         decryptionPvk: privateKey,
