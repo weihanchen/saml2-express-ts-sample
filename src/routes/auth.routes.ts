@@ -45,7 +45,7 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
     const cert: string = fs.readFileSync(spCertPath, 'utf-8');
     console.info(cert);
     res.type('application/xml');
-    res.send(samlStrategy.generateServiceProviderMetadata(cert));
+    res.send(samlStrategy.generateServiceProviderMetadata(cert, cert));
 });
 
 /**

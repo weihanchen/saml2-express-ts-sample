@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import * as passportSaml from 'passport-saml';
-import { saml2IdpSso, saml2IDPEntityID, idpCertPath, spPemPath, saml2IdpSlo } from '../config';
+import { saml2IdpSso, idpCertPath, spPemPath, saml2IdpSlo, spAddr } from '../config';
 
 const cert: string = fs.readFileSync(idpCertPath).toString();
 
@@ -10,11 +10,20 @@ const privateKey: string = fs.readFileSync(spPemPath).toString();
 export const samlStrategy = new passportSaml.Strategy(
     {
         entryPoint: saml2IdpSso,
-        callbackUrl: 'http://localhost:5002/auth/saml2/acs',
+        issuer: spAddr,
+        callbackUrl: `${spAddr}/auth/saml2/acs`,
+        logoutCallbackUrl: `${spAddr}/auth/saml2/sls`,
         logoutUrl: saml2IdpSlo,
-        issuer: saml2IDPEntityID,
         cert,
+        privateKey,
         decryptionPvk: privateKey,
+        signatureAlgorithm: 'sha256',
+        digestAlgorithm: 'sha256',
+        wantAssertionsSigned: false,
+        identifierFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified',
+        acceptedClockSkewMs: -1,
+        validateInResponseTo: false,
+        disableRequestedAuthnContext: true,
     },
     (profile: any, done: any) => done(null, profile)
 );
