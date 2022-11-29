@@ -21,7 +21,7 @@ npm run start:dev
 ```
 
 ### Configuration with IDP
-- [auth0](https://auth0.com/docs/authenticate/protocols/saml/saml-sso-integrations/configure-auth0-saml-identity-provider#manually-configure-sso-integrations)
+- [auth0](./auth0.md)
 - [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
 
 
