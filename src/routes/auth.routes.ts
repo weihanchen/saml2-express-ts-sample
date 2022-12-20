@@ -4,7 +4,7 @@ import * as passport from 'passport';
 import * as fs from 'fs';
 import { samlStrategy } from '../strategies/saml.strategy';
 import { spCertPath } from '../config';
-import { RequestWithUser } from 'passport-saml/lib/passport-saml/types';
+import { RequestWithUser } from '@node-saml/passport-saml/lib/types';
 
 const router: Router = Router();
 

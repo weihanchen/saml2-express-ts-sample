@@ -11,6 +11,8 @@ export const saml2IdpSlo: string = process.env.SAML2_IDP_SLO;
 
 export const saml2IDPEntityID: string = process.env.SAML2_IDP_ENTITY_ID;
 
+export const saml2IdentifierFormat: string = process.env.SAML2_IDENTIFIER_FORMAT;
+
 export const spAddr: string = process.env.SP_ADDR;
 
 const configDirPath = 'initial';
