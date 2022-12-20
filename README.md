@@ -1,7 +1,7 @@
 saml2-express-ts-sample
 ===
 
-This Project is an example for saml2 integration with auth0、OKTA.
+This Project is an example for saml2 integration with auth0、OKTA、[saml-idp](https://github.com/mcguinness/saml-idp).
 
 ## Quick Start
 
@@ -23,6 +23,18 @@ npm run start:dev
 ### Configuration with IDP
 - [auth0](./auth0.md)
 - [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
+- [saml-idp](https://github.com/mcguinness/saml-idp)
+```bash
+git clone https://github.com/mcguinness/saml-idp
+
+npm start -- --host=localhost \
+             --acsUrl=http://localhost:5858/auth/saml2/acs \
+             --sloUrl=http://localhost:5858/auth/saml2/sls \
+             --aud=http://localhost:5858/auth/saml2/acs \
+             --enc=true \
+             --encCert=sp.cer \
+             --encKey=sp.key
+```
 
 
 ## Redirect to IDP
