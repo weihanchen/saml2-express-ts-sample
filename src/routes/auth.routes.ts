@@ -10,8 +10,8 @@ const router: Router = Router();
 
 router.route('/logout').post((req: Request, res: Response) => {
     console.log(req.body);
-    res.send('ok')
-})
+    res.send('ok');
+});
 
 /**
  * This Route Authenticates req with IDP
@@ -37,9 +37,8 @@ router
             response.redirect('/auth/saml2/info');
         }
     );
-
 /**
- *  Metadata endpoint
+ *  Service Provider's metadata endpoint
  */
 router.route('/saml2/metadata').get((req: Request, res: Response) => {
     const cert: string = fs.readFileSync(spCertPath, 'utf-8');
@@ -49,15 +48,21 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
 });
 
 /**
+ * Update Idp by metadata
+ */
+router.route('/saml2/idp-metadata').put((req: Request, res: Response) => {
+
+});
+
+/**
  * Single Logout Service endpoint
  */
 router.route('/saml2/sls').get((req: RequestWithUser, res: Response) => {
-    
     samlStrategy.logout(req, (err, url) => {
-        req.logout(undefined, (err) => console.log(err))
-        console.log(req.user)
+        req.logout(undefined, (err) => console.log(err));
+        console.log(req.user);
         console.log(err);
-        console.log(url)
+        console.log(url);
         if (!err) {
             res.redirect(url);
         }

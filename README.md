@@ -3,6 +3,8 @@ saml2-express-ts-sample
 
 This Project is an example for saml2 integration with auth0、OKTA、[saml-idp](https://github.com/mcguinness/saml-idp).
 
+🔥 Support Upload Metadata...
+
 ## Quick Start
 
 ### self-signed certificate
@@ -21,20 +23,30 @@ npm run start:dev
 ```
 
 ### Configuration with IDP
-- [auth0](./auth0.md)
-- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
-- [saml-idp](https://github.com/mcguinness/saml-idp)
+- [(✔️ default) saml-idp](https://github.com/mcguinness/saml-idp)
 ```bash
 git clone https://github.com/mcguinness/saml-idp
 
-npm start -- --host=localhost \
-             --acsUrl=http://localhost:5858/auth/saml2/acs \
-             --sloUrl=http://localhost:5858/auth/saml2/sls \
-             --aud=http://localhost:5858/auth/saml2/acs \
+|- saml2-express-ts-sample
+    |- ...
+|- saml-idp
+    |- ...
+
+cd saml-idp
+
+npm start -- --host=10.85.2.22 \
+             --port=5857 \
+             --acsUrl=http://10.85.2.22:5858/auth/saml2/acs \
+             --sloUrl=http://10.85.2.22:5858/auth/saml2/sls \
+             --aud=http://10.85.2.22:5858/auth/saml2/acs \
              --enc=true \
-             --encCert=sp.cer \
-             --encKey=sp.key
+             --encCert="../saml2-express-ts-sample/initial/sp.cer" \
+             --encKey="../saml2-express-ts-sample/initial/sp.key"
 ```
+- [auth0](./auth0.md)
+- [okta](https://developer.okta.com/docs/concepts/saml/#federated-identity)
+
+
 
 
 ## Redirect to IDP
