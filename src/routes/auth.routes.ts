@@ -3,10 +3,12 @@ import { AuthController } from '../controllers/auth.controller';
 import * as passport from 'passport';
 import * as fs from 'fs';
 import * as https from 'https';
+import * as _ from 'lodash';
 import { fetch, toPassportConfig } from 'passport-saml-metadata';
 import { samlStrategy } from '../strategies/saml.strategy';
 import { spCertPath } from '../config';
 import { RequestWithUser } from '@node-saml/passport-saml/lib/types';
+import { Profile } from '@node-saml/node-saml/lib';
 
 const router: Router = Router();
 
@@ -77,17 +79,36 @@ router.route('/saml2/idp-metadata').put(async (req: Request, res: Response) => {
 /**
  * Single Logout Service endpoint
  */
-router.route('/saml2/sls').get((req: RequestWithUser, res: Response) => {
-    samlStrategy.logout(req, (err, url) => {
-        req.logout(undefined, (err) => console.log(err));
-        console.log(req.user);
-        console.log(err);
-        console.log(url);
-        if (!err) {
-            res.redirect(url);
+router.route('/saml2/sls').get(async (req: RequestWithUser, res: Response) => {
+    try {
+        const profile = req.user as Profile;
+
+        if (_.isNil(profile)) {
+            throw new Error("saml's profile");
         }
-    });
+
+        console.debug('============================== profile ============================================');
+        console.debug(profile);
+
+        const url: string = await getSaml2SLSUrl(req);
+
+        res.redirect(url);
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 });
+
+const getSaml2SLSUrl = async (req: RequestWithUser): Promise<string> => {
+    return new Promise((resolve, reject) => {
+        samlStrategy.logout(req, (err, _uri: string) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(_uri);
+        });
+    });
+};
 
 router.route('/saml2/info').get(AuthController.info);
 
