@@ -31,6 +31,7 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "passport": "^0.6.0",
+    "passport-saml-metadata": "^3.1.1",
     "typescript": "^4.7.4"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.0.0",
     "@types/passport": "^1.0.9",
+    "@types/passport-saml-metadata": "^2.2.1",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.18.0",

@@ -2,6 +2,8 @@ import { Router, Request, Response } from 'express';
 import { AuthController } from '../controllers/auth.controller';
 import * as passport from 'passport';
 import * as fs from 'fs';
+import * as https from 'https';
+import { fetch, toPassportConfig } from 'passport-saml-metadata';
 import { samlStrategy } from '../strategies/saml.strategy';
 import { spCertPath } from '../config';
 import { RequestWithUser } from '@node-saml/passport-saml/lib/types';
@@ -47,11 +49,29 @@ router.route('/saml2/metadata').get((req: Request, res: Response) => {
     res.send(samlStrategy.generateServiceProviderMetadata(cert, cert));
 });
 
+interface IDPMetadataReqBody {
+    url: string;
+}
+
 /**
  * Update Idp by metadata
  */
-router.route('/saml2/idp-metadata').put((req: Request, res: Response) => {
+router.route('/saml2/idp-metadata').put(async (req: Request, res: Response) => {
+    const { url }: IDPMetadataReqBody = req.body;
 
+    const httpsAgent = new https.Agent({
+        rejectUnauthorized: false,
+    });
+
+    const reader = await fetch({ url, httpsAgent });
+
+    const config = toPassportConfig(reader);
+
+    samlStrategy._saml.options = { ...samlStrategy._saml.options, ...config };
+
+    console.debug(samlStrategy._saml.options);
+
+    res.send('ok');
 });
 
 /**

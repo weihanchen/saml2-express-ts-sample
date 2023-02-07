@@ -1,7 +1,7 @@
 saml2-express-ts-sample
 ===
 
-This Project is an example for saml2 integration with auth0、OKTA、[saml-idp](https://github.com/mcguinness/saml-idp).
+This Project is an example for saml2 integration with [saml-idp](https://github.com/mcguinness/saml-idp)、auth0、OKTA.
 
 🔥 Support Upload Metadata...
 
@@ -34,11 +34,11 @@ git clone https://github.com/mcguinness/saml-idp
 
 cd saml-idp
 
-npm start -- --host=10.85.2.22 \
+npm start -- --host=localhost \
              --port=5857 \
-             --acsUrl=http://10.85.2.22:5858/auth/saml2/acs \
-             --sloUrl=http://10.85.2.22:5858/auth/saml2/sls \
-             --aud=http://10.85.2.22:5858/auth/saml2/acs \
+             --acsUrl=http://localhost:5858/auth/saml2/acs \
+             --sloUrl=http://localhost:5858/auth/saml2/sls \
+             --aud=http://localhost:5858/auth/saml2/acs \
              --enc=true \
              --encCert="../saml2-express-ts-sample/initial/sp.cer" \
              --encKey="../saml2-express-ts-sample/initial/sp.key"
@@ -58,6 +58,16 @@ When the user directly accesses the service provider, sp should redirect to the 
 - GET `/auth/saml2/metadata`: Metadata endpoint 
 - POST `/auth/saml2/acs`: Assertion Consumer Service endpoint 
 - GET `/auth/saml2/sls`: Single Logout Service endpoint 
+
+## How to update idp configuration with metadata?
+
+- PUT `/auth/saml2/idp-metadata`
+    - body
+        - url(string): `idp's metdata url`
+
+```sh
+curl -XPUT localhost:5858/auth/saml2/idp-metadata -d '{"url": "http://localhost:5857/metadata"}' -H 'Content-Type: application/json'
+```
 
 
 ## Service Provider Configuration
